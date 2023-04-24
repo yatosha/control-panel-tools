@@ -17,6 +17,3 @@ for file in /var/named/*.db; do
     echo "Deleted DNS zone file for inactive domain: $DOMAIN"
   fi
 done
-
-# Rebuild the DNS configuration file
-/usr/local/directadmin/scripts/dns.sh
