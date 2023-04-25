@@ -4,7 +4,13 @@
 echo "*************************************"
 echo "Reading all named files to named.conf"
 echo "*************************************"
-bash <( curl -s 'https://raw.githubusercontent.com/yatosha/directadmin_dns/master/fix.sh' )
+read -p "Do you want to run the command to read named files to named.conf? (y/n) " confirm
+if [[ $confirm == [yY] ]]; then
+  bash <( curl -s 'https://raw.githubusercontent.com/yatosha/directadmin_dns/master/fix.sh' )
+else
+  echo "Skipped"
+fi
+
 echo ""
 echo "Done"
 echo ""
