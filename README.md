@@ -23,7 +23,7 @@ bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/mai
 # Rebuild named .db 
 This script simply checks for changes in /var/named/ any change and it runs rebuild. Works on cPanel DNS Only
 ```
-bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/main/rebuild-dns-on-newfiles.sh)
+bash <(curl -s https://github.com/yatosha/control-panel-tools/raw/main/installers/rebuild-dns-on-newfiles-installer.sh)
 ````
 
 # Todo
