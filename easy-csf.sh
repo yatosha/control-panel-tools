@@ -1,8 +1,11 @@
 #!/bin/bash
+YELLOW='\033[33m'
+GREEN='\033[32m'
+RESET='\033[0m'
 
 # Check if csf is installed and uninstall if it is
 if [ -f "/etc/csf/csf.conf" ]; then
-    echo -e "\e[32mCSF found. Uninstalling...\e[0m"
+    echo -e "${YELLOW} found. Uninstalling...${RESET}"
     cd /etc/csf
     sh uninstall.sh
 fi
