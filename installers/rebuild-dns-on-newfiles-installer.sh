@@ -3,13 +3,13 @@
 # Define variables
 SCRIPT_DIR="/home/yatosha-dns-scripts"
 SCRIPT_NAME="rebuild-dns-on-newfiles.sh"
-CRON_FILE="/etc/cron.d/rebuild-dns-config"
+CRON_FILE="/etc/cron.d/rebuild-dns-on-newfiles"
 RUN_DIR="/var/run"
 
 # Remove the directory if it exists
 if [[ -d "$SCRIPT_DIR" ]]; then
     rm -rf "$SCRIPT_DIR"
-    rm -f /etc/cron.d/rebuild-dns-config
+    rm -f /etc/cron.d/rebuild-dns-on-newfiles
 fi
 echo "Old version removed Ok"
 
