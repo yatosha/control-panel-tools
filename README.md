@@ -16,3 +16,7 @@ Please note that as with any script that modifies system files, you should test 
 ```
 bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/main/easy-csf.sh)
 ````
+
+
+#Todo
+Control Panel Detect for named files Delete
