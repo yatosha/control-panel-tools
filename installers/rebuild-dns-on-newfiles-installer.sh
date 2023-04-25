@@ -29,7 +29,4 @@ chown root:root "$CRON_FILE"
 chown -R root:root "$SCRIPT_DIR"
 chown -R root:root "$RUN_DIR"
 
-# Start the cron service if it's not already running
-if [[ $(systemctl is-active cron) != "active" ]]; then
-    systemctl start cron
-fi
+echo "Script Installed Ok"
