@@ -19,6 +19,9 @@ if ! [ -f "/etc/csf/csf.conf" ]; then
     tar -xzf csf.tgz
     cd csf
     sh install.sh  > /dev/null 2>&1
+    cd
+    echo ""
+    echo -e "${YELLOW}CSF installed${RESET}"
 fi
 
 # Get port number from user input
@@ -48,6 +51,6 @@ echo -e "${YELLOW}Done${RESET}"
 service sshd restart
 
 # Restart csf
-csf -r
+csf -r > /dev/null 2>&1
 
 echo -e "${YELLOW} CSF installed and $PORT opened successfully.${RESET}"
