@@ -18,5 +18,5 @@ bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/mai
 ````
 
 
-#Todo
+# Todo
 Control Panel Detect for named files Delete
