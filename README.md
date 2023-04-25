@@ -26,6 +26,12 @@ This script simply checks for changes in /var/named/ any change and it runs rebu
 bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/main/installers/rebuild-dns-on-newfiles-installer.sh)
 ````
 
+# Sync DNS records via Yatosha DNS API
+Manual sync dns records from Directadmin using Yatosha DNS API
+```
+bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/main/directadmin-cpanel-dns-fix.sh)
+````
+
 # Todo
 <ul>
   <li>Control Panel Detect for named files Delete</li>
