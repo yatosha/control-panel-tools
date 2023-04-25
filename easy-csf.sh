@@ -12,7 +12,7 @@ fi
 
 # Install csf if it is not installed
 if ! [ -f "/etc/csf/csf.conf" ]; then
-    echo -e "\e[32mCSF not found. Installing...\e[0m"
+    echo -e "${YELLOW}Installing CSF${RESET}"
     cd /usr/src
     rm -fv csf.tgz
     wget https://download.configserver.com/csf.tgz
@@ -25,14 +25,12 @@ fi
 read -p "Enter port number to open: " PORT
 
 # Disable csf testing
-echo -e "${YELLOW}Disabling Test mode${RESET}"
+echo -e "${YELLOW}Disabling Test Mode${RESET}"
 sed -i "s/TESTING = \"1\"/TESTING = \"0\"/g" /etc/csf/csf.conf
-echo -e "${YELLOW}Done${RESET}"
 
 # Set RESTRICT_SYSLOG to 3
 echo -e "${YELLOW}Enable RESTRICT_SYSLOG${RESET}"
 sed -i "s/RESTRICT_SYSLOG = \"0\"/RESTRICT_SYSLOG = \"3\"/g" /etc/csf/csf.conf
-echo -e "${YELLOW}Done${RESET}"
 
 # Open port for incoming TCP traffic
 sed -i "/^TCP_IN = /s/$PORT //g" /etc/csf/csf.conf
