@@ -25,7 +25,7 @@ read -p "Enter port number to open: " PORT
 sed -i "s/TESTING = \"1\"/TESTING = \"0\"/g" /etc/csf/csf.conf
 
 # Set RESTRICT_SYSLOG to 3
-sed -i "s/RESTRICT_SYSLOG = \"2\"/RESTRICT_SYSLOG = \"3\"/g" /etc/csf/csf.conf
+sed -i "s/RESTRICT_SYSLOG = \"0\"/RESTRICT_SYSLOG = \"3\"/g" /etc/csf/csf.conf
 
 # Open port for incoming TCP traffic
 sed -i "/^TCP_IN = /s/$PORT //g" /etc/csf/csf.conf
