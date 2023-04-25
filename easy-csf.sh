@@ -5,7 +5,7 @@ RESET='\033[0m'
 
 # Check if csf is installed and uninstall if it is
 if [ -f "/etc/csf/csf.conf" ]; then
-    echo -e "${YELLOW} found. Uninstalling...${RESET}"
+    echo -e "${YELLOW}CSF Is installed. Uninstalling...${RESET}"
     cd /etc/csf
     sh uninstall.sh  > /dev/null 2>&1
 fi
@@ -25,10 +25,14 @@ fi
 read -p "Enter port number to open: " PORT
 
 # Disable csf testing
+echo -e "${YELLOW}Disabling Test mode${RESET}"
 sed -i "s/TESTING = \"1\"/TESTING = \"0\"/g" /etc/csf/csf.conf
+echo -e "${YELLOW}Done${RESET}"
 
 # Set RESTRICT_SYSLOG to 3
+echo -e "${YELLOW}Enable RESTRICT_SYSLOG${RESET}"
 sed -i "s/RESTRICT_SYSLOG = \"0\"/RESTRICT_SYSLOG = \"3\"/g" /etc/csf/csf.conf
+echo -e "${YELLOW}Done${RESET}"
 
 # Open port for incoming TCP traffic
 sed -i "/^TCP_IN = /s/$PORT //g" /etc/csf/csf.conf
@@ -37,8 +41,10 @@ sed -i "/^TCP_IN = /s/$PORT //g" /etc/csf/csf.conf
 sed -i "s/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222\"/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222,$PORT\"/g" /etc/csf/csf.conf
 
 # Update SSH port
+echo -e "${YELLOW}Chaning SSH Port to $PORT ${RESET}"
 /bin/sed -i "s/#Port 22/Port $PORT/g" /etc/ssh/sshd_config
 /bin/sed -i "s/Port 22/Port $PORT/g" /etc/ssh/sshd_config
+echo -e "${YELLOW}Done${RESET}"
 
 # Restart SSH
 service sshd restart
@@ -46,4 +52,4 @@ service sshd restart
 # Restart csf
 csf -r
 
-echo -e "${YELLOW} $PORT opened successfully.${RESET}"
+echo -e "${YELLOW} CSF installed and $PORT opened successfully.${RESET}"
