@@ -6,10 +6,18 @@ SCRIPT_NAME="rebuild-dns-on-newfiles.sh"
 CRON_FILE="/etc/cron.d/rebuild-dns-config"
 RUN_DIR="/var/run"
 
+# Remove the directory if it exists
+if [[ -d "$SCRIPT_DIR" ]]; then
+    rm -rf "$SCRIPT_DIR"
+    rm -f /etc/cron.d/rebuild-dns-config
+fi
+echo "Old version removed Ok"
+
 # Create the script directory if it doesn't exist
 if [[ ! -d "$SCRIPT_DIR" ]]; then
     mkdir -p "$SCRIPT_DIR"
 fi
+
 
 # Download the script from GitHub
 curl -sSL -o "$SCRIPT_DIR/$SCRIPT_NAME" "https://raw.githubusercontent.com/yatosha/control-panel-tools/main/$SCRIPT_NAME"
