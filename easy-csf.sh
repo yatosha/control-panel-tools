@@ -45,12 +45,13 @@ sed -i "s/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222\"/TCP_O
 echo -e "${YELLOW}Why leave default SSH Port? Setting it to port $PORT ${RESET}"
 /bin/sed -i "s/#Port 22/Port $PORT/g" /etc/ssh/sshd_config
 /bin/sed -i "s/Port 22/Port $PORT/g" /etc/ssh/sshd_config
-echo -e "${YELLOW}That was easy!! Done${RESET}"
+echo -e "${YELLOW}That was easy!! Allowed Ok${RESET}"
 
 # Restart SSH
-service sshd restart
+service sshd restart > /dev/null 2>&1
+echo "I restared sshd service for you mate!"
 
 # Restart csf
 csf -r > /dev/null 2>&1
 
-echo -e "${YELLOW}All good now, CSF installed and I opened port $PORT successfully.${RESET}"
+echo -e "${YELLOW}All good now, CSF installed and I opened port $PORT Ok${RESET}"
