@@ -1,13 +1,16 @@
 #!/bin/bash
 
+GREEN='\033[0;32m'  # Green color
+NC='\033[0m'  # No color
+
 # Prompt the user to enter a port number
 read -p "Enter the port number to open: " PORT
 
 # Check if CSF is installed by looking for the /etc/csf directory
 if [ -d "/etc/csf" ]; then
-  echo "CSF is already installed."
+  echo -e "${GREEN}CSF is already installed.${NC}"
 else
-  echo "CSF is not installed. Installing..."
+  echo -e "${GREEN}CSF is not installed. Installing...${NC}"
   cd /usr/src
   rm -fv csf.tgz
   wget https://download.configserver.com/csf.tgz
@@ -35,7 +38,7 @@ sed -i "s/RESTRICT_SYSLOG = \"0\"/RESTRICT_SYSLOG = \"3\"/g" /etc/csf/csf.conf
 csf -r
 
 # Display a message indicating that the port has been opened and the syslog restriction has been set
-echo "Port $PORT has been opened in CSF for both SSH and TCP inbound traffic, and TCP outbound traffic, and the syslog restriction has been set to 3."
+echo -e "${GREEN}Port $PORT has been opened in CSF for both SSH and TCP inbound traffic, and TCP outbound traffic, and the syslog restriction has been set to 3.${NC}"
 
 # Change SSH port to the specified port and restart SSH service
 /bin/sed -i "s/#Port 22/Port $PORT/g" /etc/ssh/sshd_config
@@ -43,4 +46,4 @@ echo "Port $PORT has been opened in CSF for both SSH and TCP inbound traffic, an
 service sshd restart
 
 # Display a message indicating that the SSH port has been changed and the SSH service has been restarted
-echo "SSH port has been changed to $PORT and the SSH service has been restarted."
+echo -e "${GREEN}SSH port has been changed to $PORT and the SSH service has been restarted.${NC}"
