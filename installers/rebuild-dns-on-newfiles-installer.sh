@@ -2,7 +2,7 @@
 
 # Define variables
 SCRIPT_DIR="/home/yatosha-dns-scripts"
-SCRIPT_NAME="rebuild-dns-config.sh"
+SCRIPT_NAME="rebuild-dns-on-newfiles.sh"
 CRON_FILE="/etc/cron.d/rebuild-dns-config"
 RUN_DIR="/var/run"
 
