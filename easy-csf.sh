@@ -7,7 +7,7 @@ RESET='\033[0m'
 if [ -f "/etc/csf/csf.conf" ]; then
     echo -e "${YELLOW} found. Uninstalling...${RESET}"
     cd /etc/csf
-    sh uninstall.sh
+    sh uninstall.sh  > /dev/null 2>&1
 fi
 
 # Install csf if it is not installed
@@ -18,7 +18,7 @@ if ! [ -f "/etc/csf/csf.conf" ]; then
     wget https://download.configserver.com/csf.tgz
     tar -xzf csf.tgz
     cd csf
-    sh install.sh
+    sh install.sh  > /dev/null 2>&1
 fi
 
 # Get port number from user input
@@ -46,4 +46,4 @@ service sshd restart
 # Restart csf
 csf -r
 
-echo -e "\e[32mPort $PORT opened successfully.\e[0m"
+echo -e "${YELLOW} $PORT opened successfully.${RESET}"
