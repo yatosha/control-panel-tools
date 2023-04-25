@@ -30,5 +30,8 @@ bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/mai
 ````
 
 # Todo
-Control Panel Detect for named files Delete
-Rebuild script, make it work after reboots.
+<ul>
+  <li>Control Panel Detect for named files Delete</li>
+<li>Open's SSH port in TCP_IN and TCP_OUT</li>
+<li>Rebuild script, make it work after reboots.</li>
+</ul>
