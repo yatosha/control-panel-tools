@@ -1,21 +1,35 @@
 #!/bin/bash
 
-# Install dependencies
-yum -y install inotify-tools
+# Define variables
+SCRIPT_DIR="/home/yatosha-dns-scripts"
+SCRIPT_NAME="rebuild-dns-config.sh"
+CRON_FILE="/etc/cron.d/rebuild-dns-config"
+RUN_DIR="/var/run"
 
-# Create the directory for the scripts if it doesn't exist
-mkdir -p /home/yatosha-dns-scripts
+# Create the script directory if it doesn't exist
+if [[ ! -d "$SCRIPT_DIR" ]]; then
+    mkdir -p "$SCRIPT_DIR"
+fi
 
-# Download the rebuild-dns-on-newfiles.sh script
-curl -o /home/yatosha-dns-scripts/rebuild-dns-on-newfiles.sh https://raw.githubusercontent.com/yatosha/control-panel-tools/main/rebuild-dns-on-newfiles.sh
+# Download the script from GitHub
+curl -sSL -o "$SCRIPT_DIR/$SCRIPT_NAME" "https://raw.githubusercontent.com/yatosha/control-panel-tools/main/$SCRIPT_NAME"
+chmod +x "$SCRIPT_DIR/$SCRIPT_NAME"
 
-# Make the script executable
-chmod +x /home/yatosha-dns-scripts/rebuild-dns-on-newfiles.sh
+# Create the run directory if it doesn't exist
+if [[ ! -d "$RUN_DIR" ]]; then
+    mkdir -p "$RUN_DIR"
+fi
 
-# Add a crontab entry to run the script on reboot
-(crontab -l 2>/dev/null; echo "@reboot /home/yatosha-dns-scripts/rebuild-dns-on-newfiles.sh >/dev/null 2>&1") | crontab -
+# Create the cron file
+echo "*/5 * * * * root $SCRIPT_DIR/$SCRIPT_NAME" > "$CRON_FILE"
 
-# Start the script as a background process
-nohup /home/yatosha-dns-scripts/rebuild-dns-on-newfiles.sh >/dev/null 2>&1 &
+# Set the correct permissions on the files and directories
+chmod 644 "$CRON_FILE"
+chown root:root "$CRON_FILE"
+chown -R root:root "$SCRIPT_DIR"
+chown -R root:root "$RUN_DIR"
 
-echo "The rebuild-dns-on-newfiles.sh script has been installed and started as a background process."
+# Start the cron service if it's not already running
+if [[ $(systemctl is-active cron) != "active" ]]; then
+    systemctl start cron
+fi
