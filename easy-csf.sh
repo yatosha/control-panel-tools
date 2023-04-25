@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Get the port number from user input
-read -p "Enter port number to open: " PORT
+# Get port from user input
+read -p "Enter port number to allow: " PORT
 
-# Check if CSF is installed, if not install it
-if [ ! -d "/etc/csf" ]; then
+# Check if csf is installed
+if [ -d "/etc/csf" ]; then
+    echo "csf is already installed"
+else
     cd /usr/src
     rm -fv csf.tgz
     wget https://download.configserver.com/csf.tgz
@@ -13,32 +15,24 @@ if [ ! -d "/etc/csf" ]; then
     sh install.sh
 fi
 
-# Add the port to the CSF config if it does not exist
-if grep -q "TCP_OUT =.*$PORT" /etc/csf/csf.conf; then
-  echo "Port $PORT already exists in TCP_OUT line."
+# Enable port in csf
+if [ "$1" == "--disable-test" ]; then
+    sed -i "s/^TESTING = \"1\"/TESTING = \"0\"/" /etc/csf/csf.conf
+fi
+sed -i "s/^TCP_IN = \"/TCP_IN = \"$PORT,/" /etc/csf/csf.conf
+if grep -q "^TCP_OUT = \".*7162\"" /etc/csf/csf.conf; then
+    sed -i "s/^TCP_OUT = \".*7162\"/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222,$PORT\"/" /etc/csf/csf.conf
 else
-  sed -i "s/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222\"/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222,$PORT\"/" /etc/csf/csf.conf
-  echo "Added port $PORT to TCP_OUT line."
+    sed -i "s/^TCP_OUT = \"/TCP_OUT = \"$PORT,/" /etc/csf/csf.conf
 fi
+csf -r
 
-# Open the port in CSF
-csf -a $PORT
-
-# Optionally disable CSF testing
-read -p "Disable CSF testing? (y/n): " DISABLE_TESTING
-if [ "$DISABLE_TESTING" == "y" ]; then
-    sed -i 's/TESTING = "1"/TESTING = "0"/' /etc/csf/csf.conf
-    echo "CSF testing disabled."
-fi
-
-# Set RESTRICT_SYSLOG to 3
-sed -i 's/RESTRICT_SYSLOG = "0"/RESTRICT_SYSLOG = "3"/' /etc/csf/csf.conf
-
-# Change SSH port to the new port number
+# Enable port for ssh
 /bin/sed -i "s/#Port 22/Port $PORT/g" /etc/ssh/sshd_config
 /bin/sed -i "s/Port 22/Port $PORT/g" /etc/ssh/sshd_config
+service sshd restart
 
-# Restart the SSH service
-systemctl restart sshd
+# Set RESTRICT_SYSLOG to 3
+sed -i "s/^RESTRICT_SYSLOG = \".*\"/RESTRICT_SYSLOG = \"3\"/" /etc/csf/csf.conf
 
-echo "Port $PORT opened and SSH port updated to $PORT."```
+echo "Port $PORT has been opened and ssh port has been changed to $PORT"
