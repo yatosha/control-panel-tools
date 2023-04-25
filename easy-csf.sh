@@ -17,7 +17,7 @@ fi
 if grep -q "TCP_OUT =.*$PORT" /etc/csf/csf.conf; then
   echo "Port $PORT already exists in TCP_OUT line."
 else
-  sed -i "s/\(TCP_OUT = \)\(.*\)\$/\1\"\2,$PORT\"/" /etc/csf/csf.conf
+  sed -i "s/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222\"/TCP_OUT = \"20,21,22,25,53,853,80,110,113,443,587,993,995,2222,$PORT\"/" /etc/csf/csf.conf
   echo "Added port $PORT to TCP_OUT line."
 fi
 
@@ -41,4 +41,4 @@ sed -i 's/RESTRICT_SYSLOG = "0"/RESTRICT_SYSLOG = "3"/' /etc/csf/csf.conf
 # Restart the SSH service
 systemctl restart sshd
 
-echo "Port $PORT opened and SSH port updated to $PORT."
+echo "Port $PORT opened and SSH port updated to $PORT."```
