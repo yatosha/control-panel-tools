@@ -12,7 +12,7 @@ fi
 
 # Install csf if it is not installed
 if ! [ -f "/etc/csf/csf.conf" ]; then
-    echo -e "${YELLOW}We are installing CSF${RESET}"
+    echo -e "${YELLOW}I'm installing CSF for you!${RESET}"
     cd /usr/src
     rm -fv csf.tgz
     wget https://download.configserver.com/csf.tgz
