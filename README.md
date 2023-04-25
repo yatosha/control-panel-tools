@@ -23,6 +23,11 @@ Enough talk, here is the script
 bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/main/easy-csf.sh)
 ````
 
+# Rebuild named .db 
+This script simply checks for changes in /var/named/ any change and it runs rebuild. Works on cPanel DNS Only
+```
+bash <(curl -s https://raw.githubusercontent.com/yatosha/control-panel-tools/main/rebuild-dns-on-newfiles.sh)
+````
 
 # Todo
 Control Panel Detect for named files Delete
