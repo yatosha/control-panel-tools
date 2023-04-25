@@ -29,7 +29,7 @@ if [[ ! -d "$RUN_DIR" ]]; then
 fi
 
 # Create the cron file
-echo "*/5 * * * * root $SCRIPT_DIR/$SCRIPT_NAME" > "$CRON_FILE"
+echo "*/1 * * * * root $SCRIPT_DIR/$SCRIPT_NAME" > "$CRON_FILE"
 
 # Set the correct permissions on the files and directories
 chmod 644 "$CRON_FILE"
